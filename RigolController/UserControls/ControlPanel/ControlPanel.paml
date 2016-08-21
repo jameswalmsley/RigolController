@@ -1,0 +1,34 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui">
+  <Grid>
+    <Grid.Styles>
+      <Style Selector="TextBox">
+        <Setter Property="BorderThickness" Value="0" />
+      </Style>
+    </Grid.Styles>
+    
+    <StackPanel Gap="5">
+      <Grid Background="#222222">
+        <StackPanel TextBlock.FontFamily="DS-Digital" TextBlock.FontSize="36" TextBlock.Foreground="Green" HorizontalAlignment="Right">
+          <StackPanel Orientation="Horizontal">
+          <TextBlock Text="{Binding Voltage}" />
+            <TextBlock Text="V" FontSize="18" />
+          </StackPanel>
+
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Current}" />
+            <TextBlock Text="A" FontSize="18" />
+          </StackPanel>
+
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Power}" />
+            <TextBlock Text="W" FontSize="18" />
+          </StackPanel>
+          
+          <TextBox IsFocused="{Binding VoltageFocused, Mode=OneWayToSource}" Text="{Binding VoltageLimit}" IsReadOnly="{Binding OnOffButtonState}" FontSize="20" TextAlignment="Right" Background="#101010" ToolTip.Tip="Can only be editored when chanel is off."  />
+          <TextBox IsFocused="{Binding CurrentLimitFocused, Mode=OneWayToSource}" Text="{Binding CurrentLimit}" IsReadOnly="{Binding OnOffButtonState}" FontSize="20" TextAlignment="Right" Background="#101010"/>
+          <Button Content="On/Off" Command="{Binding OnOffButtonCommand}" Background="{Binding OnOffButtonBackground}"/>
+        </StackPanel>
+      </Grid>
+    </StackPanel>
+  </Grid>
+</UserControl>

@@ -1,0 +1,18 @@
+﻿<Window xmlns="https://github.com/avaloniaui" 
+        xmlns:uc="clr-namespace:RigolController.UserControls.ControlPanel;assembly=RigolController"
+        SizeToContent="WidthAndHeight" Background="#202020" HasSystemDecorations="false">
+  <Grid Margin="10">
+    <ItemsControl Items="{Binding Channels}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <StackPanel Orientation="Horizontal" Gap="4" />
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <uc:ControlPanel />
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+  </Grid>
+</Window>
