@@ -9,8 +9,9 @@
     <StackPanel Gap="5">
       <Grid Background="#222222">
         <StackPanel TextBlock.FontFamily="DS-Digital" TextBlock.FontSize="36" TextBlock.Foreground="Green" HorizontalAlignment="Right">
+          <TextBlock Text="{Binding ChannelSpec}" FontSize="16" HorizontalAlignment="Center" Foreground="LightGreen"/>
           <StackPanel Orientation="Horizontal">
-          <TextBlock Text="{Binding Voltage}" />
+            <TextBlock Text="{Binding Voltage}" />
             <TextBlock Text="V" FontSize="18" />
           </StackPanel>
 

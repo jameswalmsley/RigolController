@@ -10,13 +10,15 @@
 
     public class RigolPSU
     {
-        private Client client;
+        private Client command_client;
+        private Client poll_client;
         private JobRunner packetQueue;
         private TimeSpan timeout;
 
         public RigolPSU(string connectionString)
         {
-            client = new Client("10.1.0.127", 5555, new CancellationToken());
+            command_client = new Client("10.1.0.127", 5555, new CancellationToken());
+            poll_client = new Client("10.1.0.127", 5555, new CancellationToken());
 
             Task.Factory.StartNew(() =>
             {
@@ -49,8 +51,9 @@
             });
         }        
 
-        public async Task<string> SendCommand (string command, bool awaitResponse = true)
+        public async Task<string> SendCommand (string command, bool awaitResponse = true, bool polling = false)
         {
+            Client client = polling ? poll_client : command_client;
             string result = string.Empty;
 
             await packetQueue.InvokeAsync(() =>
@@ -60,8 +63,13 @@
                 var task = client.ReadAsync(timeout);
                 task.Wait();
 
-                result = task.Result.Trim();
+                result = task.Result.Trim().Split(';')[0].Split('\n')[0];
             });
+
+            if(result == "Command error")
+            {
+                return string.Empty;
+            }
 
             return result;
         }

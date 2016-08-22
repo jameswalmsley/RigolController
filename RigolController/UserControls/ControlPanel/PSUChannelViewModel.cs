@@ -49,6 +49,8 @@ namespace RigolController.UserControls.ControlPanel
                     {
                         this.RaisePropertyChanged(nameof(CurrentLimit));
                     }
+
+                    this.RaisePropertyChanged(nameof(ChannelSpec));
                 });
             };
             
@@ -61,6 +63,11 @@ namespace RigolController.UserControls.ControlPanel
         
         public bool VoltageFocused { private get; set; }
         public bool CurrentLimitFocused { private get; set; }
+
+        public string ChannelSpec
+        {
+            get { return Model.ChannelSpec; }
+        }
 
         public double Voltage
         {

@@ -35,19 +35,23 @@ namespace RigolPSU
 
         public async Task Update()
         {            
-            var response = await owner.SendCommand($":MEAS:ALL? CH{id}");
+            var response = await owner.SendCommand($":MEAS:ALL? CH{id}", true, true);
 
             if(response != string.Empty)
             {
                 var parts = response.Split(',');
-                Voltage = Convert.ToDouble(parts[0]);
-                Current = Convert.ToDouble(parts[1]);
-                Power = Convert.ToDouble(parts[2]);
-
-                ChannelUpdateReceived?.Invoke(this, new EventArgs());
+                try
+                {
+                    Voltage = Convert.ToDouble(parts[0]);
+                    Current = Convert.ToDouble(parts[1]);
+                    Power = Convert.ToDouble(parts[2]);
+                } catch(Exception e)
+                {
+                    return;
+                }
             }
 
-            response = await owner.SendCommand($":OUTP? CH{id}");
+            response = await owner.SendCommand($":OUTP? CH{id}", true, true);
 
             if(response != string.Empty)
             {
@@ -62,13 +66,21 @@ namespace RigolPSU
                 }
             }
 
-            response = await owner.SendCommand($":APPL? CH{id}");
+            response = await owner.SendCommand($":APPL? CH{id}", true, true);
 
             if(response != string.Empty)
             {
                 var parts = response.Split(',');
-                VoltageLimit = Convert.ToDouble(parts[1]);
-                CurrentLimit = Convert.ToDouble(parts[2]);
+
+                try
+                {
+                    ChannelSpec = parts[0];
+                    VoltageLimit = Convert.ToDouble(parts[1]);
+                    CurrentLimit = Convert.ToDouble(parts[2]);
+                } catch (Exception e)
+                {
+                    return;
+                }
             }
 
             ChannelUpdateReceived?.Invoke(this, new EventArgs());
@@ -88,5 +100,7 @@ namespace RigolPSU
         {
             get { return poweredOn; }
         }
+
+        public string ChannelSpec { get; private set; }
     }
 }
