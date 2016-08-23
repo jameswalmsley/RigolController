@@ -12,6 +12,7 @@
     public class RigolPSUViewModel : ViewModel<RigolPSU>
     {
         private RigolPSU powerSupply;
+        private PythonAPI pyapi;
 
         public RigolPSUViewModel(RigolPSU model) : base(model)
         {
@@ -21,8 +22,27 @@
             {
                 channels.Add(new PSUChannelViewModel(channel));               
             }
+
+            pyapi = new PythonAPI();
+            pyapi.AddVariable("psu", model);
+            pyapi.AddModule("time");
+
+            ExecutePythonCommand = ReactiveCommand.Create();
+            ExecutePythonCommand.Subscribe(o => {
+                pyapi.ExecutePython(PythonCode);     
+            });
         }
 
+        private string pythonCode = "psu.Channels[0].SetVoltage(5)";
+
+        public string PythonCode
+        {
+            get { return pythonCode; }
+            set { this.RaiseAndSetIfChanged(ref pythonCode, value); }
+        }
+
+
+        public ReactiveCommand<object> ExecutePythonCommand { get; }
 
         /*
         private async void Timer_Tick(object sender, EventArgs e)

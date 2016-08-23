@@ -12,6 +12,8 @@ namespace RigolController
 
         public override void Initialize()
         {
+            PythonAPI py = new PythonAPI();
+            int value = py.Add(2, 3);
             AvaloniaXamlLoader.Load(this);
             base.Initialize();
         }

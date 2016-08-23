@@ -32,7 +32,7 @@
             Channels.Add(new PSUChannel(this, 2));
             Channels.Add(new PSUChannel(this, 3));
 
-            timeout = TimeSpan.FromMilliseconds(150);
+            timeout = TimeSpan.FromMilliseconds(100);
         }
 
         public void Connect()
@@ -46,7 +46,7 @@
                         await channel.Update();
                     }
 
-                    await Task.Delay(50);
+                    await Task.Delay(10);
                 }
             });
         }        

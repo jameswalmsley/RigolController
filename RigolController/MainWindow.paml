@@ -1,6 +1,7 @@
 ﻿<Window xmlns="https://github.com/avaloniaui" 
         xmlns:uc="clr-namespace:RigolController.UserControls.ControlPanel;assembly=RigolController"
         SizeToContent="WidthAndHeight" Background="#202020" HasSystemDecorations="false">
+  <StackPanel>
   <Grid Margin="10">
     <ItemsControl Items="{Binding Channels}">
       <ItemsControl.ItemsPanel>
@@ -15,4 +16,8 @@
       </ItemsControl.ItemTemplate>
     </ItemsControl>
   </Grid>
+    <TextBox AcceptsReturn="true" AcceptsTab="true" Text="{Binding PythonCode}"># Python 2.7.5, control PSU with 'psu' object.</TextBox>
+    <Button Content="Execute" Command="{Binding ExecutePythonCommand}"></Button>
+  </StackPanel>
+  
 </Window>
